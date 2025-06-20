@@ -2,6 +2,7 @@
 __pycache__
 .cache
 build
+.DS_Store
 *.egg-info
 *.so
 

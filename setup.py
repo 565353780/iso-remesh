@@ -8,9 +8,14 @@ from torch.utils.cpp_extension import CUDAExtension, CppExtension, BuildExtensio
 SYSTEM = system()
 
 remesh_root_path = os.getcwd() + "/iso_remesh/Cpp/"
+remesh_lib_path = os.getcwd() + "/iso_remesh/Lib/"
 remesh_src_path = remesh_root_path + "src/"
 remesh_sources = glob.glob(remesh_src_path + "*.cpp")
-remesh_include_dirs = [remesh_root_path + "include"]
+remesh_include_dirs = [
+    remesh_root_path + "include",
+    remesh_lib_path + "eigen",
+    remesh_lib_path + "libigl/include",
+]
 
 remesh_extra_compile_args = [
     "-O3",
