@@ -76,6 +76,8 @@ public:
   ~IsotropicHalfedgeMesh();
 
   double averageEdgeLength();
+  double minEdgeLength();
+  double maxEdgeLength();
   void breakEdge(Halfedge *halfedge);
   bool collapseEdge(Halfedge *halfedge, double maxEdgeLengthSquared);
   bool flipEdge(Halfedge *halfedge);

@@ -45,6 +45,9 @@ public:
   void remesh(size_t iteration);
   IsotropicHalfedgeMesh *remeshedHalfedgeMesh();
 
+  double minEdgeLength();
+  double maxEdgeLength();
+
 private:
   const std::vector<Vector3> *m_vertices = nullptr;
   const std::vector<std::vector<size_t>> *m_triangles = nullptr;

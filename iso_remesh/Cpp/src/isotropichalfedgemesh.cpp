@@ -172,6 +172,42 @@ double IsotropicHalfedgeMesh::averageEdgeLength() {
   return totalLength / halfedgeCount;
 }
 
+double IsotropicHalfedgeMesh::minEdgeLength() {
+  double minLength = -1.0;
+  for (Face *face = m_firstFace; nullptr != face; face = face->nextFace) {
+    const auto &startHalfedge = face->halfedge;
+    Halfedge *halfedge = startHalfedge;
+    do {
+      const auto &nextHalfedge = halfedge->nextHalfedge;
+      const double curr_length = (halfedge->startVertex->position -
+                                  nextHalfedge->startVertex->position)
+                                     .length();
+      if (minLength < 0) {
+        minLength = curr_length;
+      } else {
+        minLength = std::min(minLength, curr_length);
+      }
+    } while (halfedge != startHalfedge);
+  }
+  return minLength;
+}
+
+double IsotropicHalfedgeMesh::maxEdgeLength() {
+  double maxLength = 0.0;
+  for (Face *face = m_firstFace; nullptr != face; face = face->nextFace) {
+    const auto &startHalfedge = face->halfedge;
+    Halfedge *halfedge = startHalfedge;
+    do {
+      const auto &nextHalfedge = halfedge->nextHalfedge;
+      const double curr_length = (halfedge->startVertex->position -
+                                  nextHalfedge->startVertex->position)
+                                     .length();
+      maxLength = std::max(maxLength, curr_length);
+    } while (halfedge != startHalfedge);
+  }
+  return maxLength;
+}
+
 IsotropicHalfedgeMesh::Face *IsotropicHalfedgeMesh::newFace() {
   Face *face = new Face;
 

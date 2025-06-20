@@ -14,7 +14,11 @@ class Remesher:
 
     @staticmethod
     def isoRemesh(
-        mesh_file_path: str, save_mesh_file_path: str, overwrite: bool = False
+        mesh_file_path: str,
+        save_mesh_file_path: str,
+        edge_length_scale: float = 1.0,
+        iter_num: int = 3,
+        overwrite: bool = False,
     ) -> bool:
         if os.path.exists(save_mesh_file_path):
             if not overwrite:
@@ -38,7 +42,9 @@ class Remesher:
         else:
             save_obj_file_path = save_mesh_file_path
 
-        remesh_cpp.isoRemeshing(obj_file_path, save_obj_file_path)
+        remesh_cpp.isoRemeshing(
+            obj_file_path, save_obj_file_path, edge_length_scale, iter_num
+        )
 
         if not os.path.exists(save_mesh_file_path):
             save_mesh = o3d.io.read_triangle_mesh(save_obj_file_path)

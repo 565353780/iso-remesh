@@ -73,18 +73,22 @@ static bool loadObj(const std::string &filename,
 }
 
 void isoRemeshing(const std::string &mesh_file_path,
-                  const std::string &save_mesh_file_path) {
+                  const std::string &save_mesh_file_path,
+                  const float &edge_length_scale, const int &iter_num) {
   std::vector<Vector3> inputVertices;
   std::vector<std::vector<size_t>> inputTriangles;
 
   loadObj(mesh_file_path, inputVertices, inputTriangles);
 
   IsotropicRemesher isotropicRemesher(&inputVertices, &inputTriangles);
-  // isotropicRemesher.setSharpEdgeIncludedAngle(90);
-  // isotropicRemesher.setTargetEdgeLength(isotropicRemesher.initialAverageEdgeLength()
-  // * 0.5);
-  isotropicRemesher.setTargetTriangleCount(50000);
-  isotropicRemesher.remesh(3);
+  isotropicRemesher.setSharpEdgeIncludedAngle(90);
+  std::cout << "setTargetEdgeLength: "
+            << isotropicRemesher.initialAverageEdgeLength() * edge_length_scale
+            << std::endl;
+  isotropicRemesher.setTargetEdgeLength(
+      isotropicRemesher.initialAverageEdgeLength() * edge_length_scale);
+  // isotropicRemesher.setTargetTriangleCount(50000);
+  isotropicRemesher.remesh(iter_num);
 
   FILE *fp = fopen(save_mesh_file_path.c_str(), "wb");
   size_t outputIndex = 0;

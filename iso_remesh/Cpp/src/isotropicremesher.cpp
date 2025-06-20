@@ -170,6 +170,14 @@ IsotropicHalfedgeMesh *IsotropicRemesher::remeshedHalfedgeMesh() {
   return m_halfedgeMesh;
 }
 
+double IsotropicRemesher::minEdgeLength() {
+  return m_halfedgeMesh->minEdgeLength();
+}
+
+double IsotropicRemesher::maxEdgeLength() {
+  return m_halfedgeMesh->maxEdgeLength();
+}
+
 void IsotropicRemesher::collapseShortEdges(double minEdgeLengthSquared,
                                            double maxEdgeLengthSquared) {
   for (IsotropicHalfedgeMesh::Face *face =
